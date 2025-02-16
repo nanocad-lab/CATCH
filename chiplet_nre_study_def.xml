@@ -1,0 +1,132 @@
+<!--
+    =======================================================================
+    Copyright 2025 UCLA NanoCAD Laboratory
+    
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+    
+        http://www.apache.org/licenses/LICENSE-2.0
+    
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+    =======================================================================
+    -->
+<chip name="interposer"
+	bb_area=""
+	bb_cost=""
+	bb_quality=""
+	bb_power=""
+	aspect_ratio=""
+	x_location=""
+	y_location=""
+	core_area="0.0"
+	fraction_memory="0.0"
+	fraction_logic="0.0"
+	fraction_analog="1.0"
+	gate_flop_ratio="1.0"
+	reticle_share="1.0"
+	buried="False"
+	assembly_process="organic_simultaneous_bonding"
+	test_process="KGD_free_test"
+	stackup="1:combined_interposer_organic"
+	wafer_process="process_1"
+	power="0.0"
+	quantity="INSERTSWEEPQUANTITY"
+	core_voltage="1.0">
+	<chip name="chiplet_0"
+		bb_area=""
+		bb_cost=""
+		bb_quality=""
+		bb_power=""
+		aspect_ratio=""
+		x_location=""
+		y_location=""
+		core_area="200.0"
+		fraction_memory="0.0"
+		fraction_logic="1.0"
+		fraction_analog="0.0"
+	gate_flop_ratio="1.0"
+		reticle_share="1.0"
+		buried="False"
+		assembly_process="organic_simultaneous_bonding"
+		test_process="KGD_free_test"
+		stackup="1:combined_5nm"
+		wafer_process="process_1"
+		power="25.0"
+		quantity="1000000000"
+		core_voltage="1.0">
+	</chip>
+	<chip name="chiplet_1"
+		bb_area=""
+		bb_cost=""
+		bb_quality=""
+		bb_power=""
+		aspect_ratio=""
+		x_location=""
+		y_location=""
+		core_area="200.0"
+		fraction_memory="0.0"
+		fraction_logic="1.0"
+		fraction_analog="0.0"
+	gate_flop_ratio="1.0"
+		reticle_share="1.0"
+		buried="False"
+		assembly_process="organic_simultaneous_bonding"
+		test_process="KGD_free_test"
+		stackup="1:combined_5nm"
+		wafer_process="process_1"
+		power="25.0"
+		quantity="1000000000"
+		core_voltage="1.0">
+	</chip>
+	<chip name="chiplet_2"
+		bb_area=""
+		bb_cost=""
+		bb_quality=""
+		bb_power=""
+		aspect_ratio=""
+		x_location=""
+		y_location=""
+		core_area="200.0"
+		fraction_memory="0.0"
+		fraction_logic="1.0"
+		fraction_analog="0.0"
+	gate_flop_ratio="1.0"
+		reticle_share="1.0"
+		buried="False"
+		assembly_process="organic_simultaneous_bonding"
+		test_process="KGD_free_test"
+		stackup="1:combined_5nm"
+		wafer_process="process_1"
+		power="25.0"
+		quantity="1000000000"
+		core_voltage="1.0">
+	</chip>
+	<chip name="chiplet_3"
+		bb_area=""
+		bb_cost=""
+		bb_quality=""
+		bb_power=""
+		aspect_ratio=""
+		x_location=""
+		y_location=""
+		core_area="200.0"
+		fraction_memory="0.0"
+		fraction_logic="1.0"
+		fraction_analog="0.0"
+	gate_flop_ratio="1.0"
+		reticle_share="1.0"
+		buried="False"
+		assembly_process="organic_simultaneous_bonding"
+		test_process="KGD_free_test"
+		stackup="1:combined_5nm"
+		wafer_process="process_1"
+		power="25.0"
+		quantity="INSERTSWEEPQUANTITY"
+		core_voltage="1.0">
+	</chip>
+</chip>

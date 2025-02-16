@@ -64,7 +64,7 @@ def main():
     # sip.print_description()
 
     #print("Cost of design = " + str(sip.get_cost()))
-    print(sip.compute_total_cost())
+    print(str(sip.compute_total_non_scrap_cost()) + " " + str(sip.compute_scrap_cost()))
 
 #    for chip in sip.get_chips():
 #        print(chip.name + " " + str(chip.get_cost()))

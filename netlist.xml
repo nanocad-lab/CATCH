@@ -1,4 +1,29 @@
 <!--
+    =======================================================================
+    Copyright 2025 UCLA NanoCAD Laboratory
+    
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+    
+        http://www.apache.org/licenses/LICENSE-2.0
+    
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+    =======================================================================
+    Filename: assembly_process_definitions.xml
+    Author: Alexander Graening
+    Affiliation: University of California, Los Angeles
+    Email: agraening@ucla.edu
+
+    Assembly Process Definition Format:
+        - Name: The name listed here is the name that should be referenced in the system definition.
+        - Materials Cost per mm2: This is given in units of $/mm^2. This is the
+            cost of the materials used in the assembly process.
+        - Pick and place machine cost in USD.
     Filename: netlist.xml
     Author: Alexander Graening
     Affiliation: University of California, Los Angeles
@@ -18,15 +43,34 @@
             equivalent. In this case, the area of the bidirectional IO follows
             the same format as above, block0 will have the area defined as TX
             area in the IO definition.
+        - Black Box Count: This is the number of instances of the IO. This will
+            override the bandwidth calculation, so ignore leave this as the empty
+            string if you want the number of instances to be calculated from the
+            bandwidth and IO definition.
         - Bandwidth: The bandwidth is defined in G-bit/s. This is the bandwidth
             of the connection in one direction for a directional connection. If
             the IO is bidirectional, this is the combined bandwidth in both
             directions. This is assumed to be symmetric so 10G-bit/s would mean
             5G-bit/s in each direction.
+        - Average Bandwidth Utilization: This is the average bandwidth utilization
+            of the connection. This is used for the power calculation and should be
+            a number between 0 and 1.
 
     Description: Define connectivity between blocks for an example design. This
             has some extra explanation below and can be used as a template for 
             defining your own designs.
+
+    Note that each parameter is required to be set to avoid throwing an error. Either
+            the bb_count or the bandwidth must be defined. If bb_count is defined, the
+            value set for bandwidth does not matter. To use the bandwidth calculation,
+            set bb_count="".
+            A list of required parameters is below:
+                - type
+                - block0
+                - block1
+                - bb_count
+                - bandwidth
+                - average_bandwidth_utilization
 -->
 
 <netlist>
@@ -34,43 +78,57 @@
     <net type="UCIe_standard"
         block0="CPU"
         block1="MEM"
-        bandwidth="64">
+        bb_count=""
+        bandwidth="64"
+        average_bandwidth_utilization="0.5">
     </net>
     <!-- GPIO is not bidirectional. Defining connections from CPU to MEM. -->
     <net type="GPIO"
         block0="CPU"
         block1="MEM"
-        bandwidth="100">
+        bb_count=""
+        bandwidth="100"
+        average_bandwidth_utilization="0.5">
     </net>
     <!-- GPIO is not bidirectional. Now defining connections the opposite direction from MEM to CPU. -->
     <net type="GPIO"
         block0="MEM"
         block1="CPU"
-        bandwidth="100">
+        bb_count=""
+        bandwidth="100"
+        average_bandwidth_utilization="0.5">
     </net>
     <!-- PCIe_standard is bidirectional. -->
     <net type="PCIe"
         block0="CPU"
         block1="GPU"
-        bandwidth="128">
+        bb_count=""
+        bandwidth="128"
+        average_bandwidth_utilization="0.5">
     </net>
     <!-- GPIO is not bidirectional. Defining connections from CPU to GPU. -->
     <net type="GPIO"
         block0="CPU"
         block1="GPU"
-        bandwidth="10">
+        bb_count=""
+        bandwidth="10"
+        average_bandwidth_utilization="0.5">
     </net>
     <!-- GPIO is not bidirectional. Now defining connections the opposite direction from GPU to CPU. -->
     <net type="GPIO"
         block0="GPU"
         block1="CPU"
-        bandwidth="10">
+        bb_count=""
+        bandwidth="10"
+        average_bandwidth_utilization="0.5">
     </net>
     <!-- UCIe_standard is bidirectional. -->
     <net type="UCIe_standard"
         block0="GPU"
         block1="MEM"
-        bandwidth="64">
+        bb_count=""
+        bandwidth="64"
+        average_bandwidth_utilization="0.5">
     </net>
 </netlist>
 

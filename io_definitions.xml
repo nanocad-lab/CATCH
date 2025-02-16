@@ -1,4 +1,29 @@
 <!--
+    =======================================================================
+    Copyright 2025 UCLA NanoCAD Laboratory
+    
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+    
+        http://www.apache.org/licenses/LICENSE-2.0
+    
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+    =======================================================================
+    Filename: assembly_process_definitions.xml
+    Author: Alexander Graening
+    Affiliation: University of California, Los Angeles
+    Email: agraening@ucla.edu
+
+    Assembly Process Definition Format:
+        - Name: The name listed here is the name that should be referenced in the system definition.
+        - Materials Cost per mm2: This is given in units of $/mm^2. This is the
+            cost of the materials used in the assembly process.
+        - Pick and place machine cost in USD.
     Filename: io_definitions.xml
     Author: Alexander Graening
     Affiliation: University of California, Los Angeles
@@ -35,6 +60,20 @@
         
 
     Description: Define a starter IO cell library for the example design.
+
+    Note that each parameter is required to be set even if it is not relevant to the application.
+            If is it not used, select a relevant value that will interact correctly with the cost model.
+            If no value is selected, at least define the line as the empty string: <parameter_name="">.
+            A list of required parameters for the io object is below:
+                - type
+                - tx_area
+                - rx_area
+                - shoreline
+                - bandwidth
+                - wire_count
+                - bidirectional
+                - energy_per_bit
+                - reach
 -->
 
 <ios>
@@ -49,6 +88,7 @@
     <!-- This means at a max rate of 32 GT/s, this is (16*2)*32 = 1024 G-bit/s -->
     <!-- Since UCIe is defined as bidirectional, the bandwidth here is the sum of both
         directions. -->
+    <!-- All values except energy per bit are taken from the UCIe standard. <add reference> -->
     <io type="UCIe_standard"
         tx_area="0.75438"
         rx_area="0.75438"
@@ -59,6 +99,57 @@
         energy_per_bit="0.000000000001"
         reach="10.0">
     </io> 
+    <!-- The following are modified definitions based on the above UCIe_standard but with arbitrarily set reach values. -->
+    <io type="UCIe_standard_1"
+        tx_area="0.75438"
+        rx_area="0.75438"
+        shoreline="0.5715"
+        bandwidth="1024"
+        wire_count="44"
+        bidirectional="True"
+        energy_per_bit="0.000000000001"
+        reach="1.0">
+    </io> 
+    <io type="UCIe_standard_2"
+        tx_area="0.75438"
+        rx_area="0.75438"
+        shoreline="0.5715"
+        bandwidth="1024"
+        wire_count="44"
+        bidirectional="True"
+        energy_per_bit="0.000000000001"
+        reach="2.0">
+    </io> 
+    <io type="UCIe_standard_5"
+        tx_area="0.75438"
+        rx_area="0.75438"
+        shoreline="0.5715"
+        bandwidth="1024"
+        wire_count="44"
+        bidirectional="True"
+        energy_per_bit="0.000000000001"
+        reach="5.0">
+    </io> 
+    <io type="UCIe_standard_10"
+        tx_area="0.75438"
+        rx_area="0.75438"
+        shoreline="0.5715"
+        bandwidth="1024"
+        wire_count="44"
+        bidirectional="True"
+        energy_per_bit="0.000000000001"
+        reach="10.0">
+    </io> 
+    <io type="UCIe_standard_20"
+        tx_area="0.75438"
+        rx_area="0.75438"
+        shoreline="0.5715"
+        bandwidth="1024"
+        wire_count="44"
+        bidirectional="True"
+        energy_per_bit="0.000000000001"
+        reach="20.0">
+    </io> 
     <!-- There are 64 wires transmitting and 16 receiving in the interface for advanced
         UCIe. -->
     <!-- There are 70 wires supporting transmission for each direction giving 140 wires
@@ -66,6 +157,7 @@
     <!-- This means at a max rate of 32 GT/s, this is (64*2)*32 = 4096 G-bit/s -->
     <!-- Since UCIe is defined as bidirectional, the bandwidth here is the sum of both
         directions. -->
+    <!-- All values except energy per bit are taken from the UCIe standard. <add reference> -->
     <io type="UCIe_advanced"
         tx_area="0.4055184"
         rx_area="0.4055184"
@@ -78,6 +170,11 @@
     </io>
     <!-- This is an IO cell based on a previous custom design in our lab. 
         We recommend defining IO cells using very descriptive names such as this. -->
+    <!-- Taken from UCLA custom design. -->
+    <!-- The calculations for the size of ESD protection used here were based on 
+        a SPICE simulation, but did not comply to CDM as was the original intent. 
+        Avoid relying on the specific numbers below although these are a good example
+        for how to use the IO definitions. -->
     <io type="2Gbs_100vCDM_2mm"
         tx_area="0.0002"
         rx_area="0.0002"
@@ -85,23 +182,93 @@
         bandwidth="2"
         wire_count="1"
         bidirectional="False"
-        energy_per_bit="0.000000000001"
+        energy_per_bit="0.001"
         reach="2.0">
     </io>
-    <!-- This is another example of a serial protocol, but this does not
-        conform to the PCIe standard. Will go back and fix this later. -->
-    <io type="PCIe"
-        tx_area="2.0"
-        rx_area="2.0"
-        shoreline="1.0"
-        bandwidth="2048"
-        wire_count="140"
-        bidirectional="True"
-        energy_per_bit="0.000000000001"
+    <io type="2Gbs_100vCDM_5mm"
+        tx_area="0.0002"
+        rx_area="0.0002"
+        shoreline="0.01"
+        bandwidth="2"
+        wire_count="1"
+        bidirectional="False"
+        energy_per_bit="0.001"
+        reach="5.0">
+    </io>
+    <io type="2Gbs_100vCDM_10mm"
+        tx_area="0.0002"
+        rx_area="0.0002"
+        shoreline="0.01"
+        bandwidth="2"
+        wire_count="1"
+        bidirectional="False"
+        energy_per_bit="0.001"
         reach="10.0">
+    </io>
+    <io type="2Gbs_100vCDM_20mm"
+        tx_area="0.0002"
+        rx_area="0.0002"
+        shoreline="0.01"
+        bandwidth="2"
+        wire_count="1"
+        bidirectional="False"
+        energy_per_bit="0.001"
+        reach="20.0">
+    </io>
+    <io type="2Gbs_0vCDM_2mm"
+        tx_area="0.00004763"
+        rx_area="0.00004763"
+        shoreline="0.01"
+        bandwidth="2"
+        wire_count="1"
+        bidirectional="False"
+        energy_per_bit="0.001"
+        reach="2.0">
+    </io>
+    <io type="2Gbs_10vCDM_2mm"
+        tx_area="0.00006265"
+        rx_area="0.00006265"
+        shoreline="0.01"
+        bandwidth="2"
+        wire_count="1"
+        bidirectional="False"
+        energy_per_bit="0.001"
+        reach="2.0">
+    </io>
+    <io type="2Gbs_125vCDM_2mm"
+        tx_area="0.00009270"
+        rx_area="0.00009270"
+        shoreline="0.01"
+        bandwidth="2"
+        wire_count="1"
+        bidirectional="False"
+        energy_per_bit="0.001"
+        reach="2.0">
+    </io>
+    <io type="2Gbs_250vCDM_2mm"
+        tx_area="0.00013025"
+        rx_area="0.00013025"
+        shoreline="0.01"
+        bandwidth="2"
+        wire_count="1"
+        bidirectional="False"
+        energy_per_bit="0.001"
+        reach="2.0">
+    </io>
+    <io type="2Gbs_500vCDM_2mm"
+        tx_area="0.00019775"
+        rx_area="0.00019785"
+        shoreline="0.01"
+        bandwidth="2"
+        wire_count="1"
+        bidirectional="False"
+        energy_per_bit="0.001"
+        reach="2.0">
     </io>
     <!--- The values given for the GPIO cell should be replaced by foundry
         information -->
+    <!-- This is based on the UCLA custom IO but with a larger area. -->
+    <!-- Other GPIOs below are set to provide variations on this, but have not been used or updated in a while. -->
     <io type="GPIO"
         tx_area="0.001"
         rx_area="0.001"
@@ -185,6 +352,7 @@
         energy_per_bit="0.000000000001"
         reach="2.0">
     </io>
+    <!-- Below was set for testing parameters. -->
     <io type="temp_io"
         tx_area="0.0"
         rx_area="0.0"

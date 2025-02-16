@@ -1,13 +1,62 @@
 <!--
+    =======================================================================
+    Copyright 2025 UCLA NanoCAD Laboratory
+    
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+    
+        http://www.apache.org/licenses/LICENSE-2.0
+    
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+    =======================================================================
+    Filename: assembly_process_definitions.xml
+    Author: Alexander Graening
+    Affiliation: University of California, Los Angeles
+    Email: agraening@ucla.edu
+
+    Assembly Process Definition Format:
+        - Name: The name listed here is the name that should be referenced in the system definition.
+        - Materials Cost per mm2: This is given in units of $/mm^2. This is the
+            cost of the materials used in the assembly process.
+        - Pick and place machine cost in USD.
     Filename: sip.xml
     Author: Alexander Graening
     Affiliation: University of California, Los Angeles
     Email: agraening@ucla.edu
 
     System Definition Format:
+        - Black Box Parameters (Area, Cost, Quality, Power): These are the
+            black box parameters for the chip. These can be used to override
+            the computed parameters. For normal operation of the cost model to
+            compute these parameters, set these to the empty string "". The
+            area is in mm^2, the cost is in USD, the quality is a number between
+            0.0 and 1.0, and the power is in Watts.
+        - Aspect Ratio: If this is defined, this is interpreted as ratio r = x/y.
+            If this is not defined, r is assumed to be 1 and the chip is square.
+            Note that x = sqrt(Ar) and y = sqrt(A/r) where A is the calculated chip area.
+        - X and Y Locations: This allows defining the locations of the chip relative to
+            the chip below. Note that the coordinate is the position of the bottom left
+            corner relative to the bottom left corner of the lower chip.
         - Core Area: This is the area required for logic and memory. A passive
             integration substrate would have a core area of 0 since the real
-            area is determined by the logic area of the dies stacked on it.
+            area is determined by the logic area of the dies stacked on it. (mm^2)
+        - Fraction Memory: This is the fraction of the core area that is memory.
+            This is used for NRE design costs. Valid values are between 0.0 and 1.0.
+        - Fraction Logic: This is the fraction of the core area that is logic.
+            This is used for NRE design costs. Valid values are between 0.0 and 1.0.
+        - Fraction Analog: This is the fraction of the core area that is analog.
+            This is used for NRE design costs. Valid values are between 0.0 and 1.0.
+        - Reticle Share: Since it is possible to share mask costs by splitting
+            up among multiple designs, this parameter can be used to give the
+            fraction of a shared reticle that is used by this design. Note that
+            even if there is not a perfect reticle fit, the reticle share of 1.0
+            should be used to indicate that there is not sharing. Valid values
+            are between 0.0 and 1.0.
         - Buried: If this flag is true, a die does not affect the area of
             the integration substrate it is stacked on. This is useful for
             modelling EMIB.
@@ -22,8 +71,6 @@
             For example: "1:active_layer,2:advanced_metal_layer,2:intermediate_metal_layer,
             2:global_metal_layer" It is also valid to simply define a single layer.
         - Wafer Process: Select a wafer process from the wafer process file here.
-        - NRE Design Cost: This is the non-recurring engineering cost for the chip.
-            We plan to add more details to the NRE cost modelling support.
         - Core Voltage: This is the core voltage for the chip used to determine
             current density based on power number.
         - Power: This is the power of the chip used to determine the number of VDD/GND bumps
@@ -36,7 +83,7 @@
             for the chip. If there are multiple regulators, they should be comma
             separated.
         - Regulator Type: This is the type of voltage regulator for the chip.
-            If there are multiple regulators, they should be comma separated. This is mean to 
+            If there are multiple regulators, they should be comma separated.
 
         - Defining 2.5D and 3D stacks:
             - As can be seen in the design below, each chip has may contain a list of nested
@@ -50,16 +97,55 @@
             In the design below, there is a MEM chiplet 3D bonded on a CPU chiplet. That stack
             and a GPU chiplet are bonded on an interposer which is the root "chip" object in
             this system definition.
+
+    
+    Note that each parameter is required to be set even if it is not relevant to the application.
+            If is it not used, select a relevant value that will interact correctly with the cost model.
+            If no value is selected, at least define the line as the empty string: <parameter_name="">.
+            A list of required parameters for the chip object is below:
+                - name
+                - bb_area
+                - bb_cost
+                - bb_quality
+                - bb_power
+                - aspect_ratio
+                - x_location
+                - y_location
+                - core_area
+                - fraction_memory
+                - fraction_logic
+                - fraction_analog
+                - reticle_share
+                - buried
+                - assembly_process
+                - test_process
+                - stackup
+                - wafer_process
+                - core_voltage
+                - power
+                - quantity
 -->
 
 <chip name="interposer"
-    coreArea="0.0"
+    bb_area=""
+    bb_cost=""
+    bb_quality=""
+    bb_power=""
+    aspect_ratio=""
+    x_location=""
+    y_location=""
+    
+    core_area="0.0"
+    fraction_memory="0.0"
+    fraction_logic="0.0"
+    fraction_analog="1.0"
+    gate_flop_ratio="1.0"
+    reticle_share="1.0"
     buried="False"
     assembly_process="silicon_individual_bonding"
-    test_process="test_process_0"
+    test_process="notest"
     stackup="1:organic_substrate,6:5nm_global_metal"
     wafer_process="process_1"
-    nre_design_cost="0.0"
     v_rail="5"
     reg_eff="1.0"
     reg_type="none"
@@ -67,13 +153,25 @@
     power="0.0"
     quantity="1000000">
     <chip name="CPU"
-        coreArea="10.0"
+        bb_area=""
+        bb_cost=""
+        bb_quality=""
+        bb_power=""
+        aspect_ratio=""
+        x_location=""
+        y_location=""
+    
+        core_area="10.0"
+        fraction_memory="0.0"
+        fraction_logic="1.0"
+        fraction_analog="0.0"
+        gate_flop_ratio="1.0"
+        reticle_share="1.0"
         buried="False"
         assembly_process="silicon_individual_bonding"
-        test_process="test_process_0"
+        test_process="notest"
         stackup="1:5nm_active,2:5nm_advanced_metal,2:5nm_intermediate_metal,2:5nm_global_metal"
         wafer_process="process_1"
-        nre_design_cost="0.0"
         v_rail="5,1.8"
         reg_eff="1.0,0.9"
         reg_type="none,side"
@@ -81,13 +179,25 @@
         power="100.0"
         quantity="1000000">
         <chip name="MEM"
-            coreArea="10.0"
+            bb_area=""
+            bb_cost=""
+            bb_quality=""
+            bb_power=""
+            aspect_ratio=""
+            x_location=""
+            y_location=""
+    
+            core_area="10.0"
+            fraction_memory="1.0"
+            fraction_logic="0.0"
+            fraction_analog="0.0"
+            gate_flop_ratio="1.0"
+            reticle_share="1.0"
             buried="False"
             assembly_process="organic_simultaneous_bonding"
-            test_process="test_process_0"
+            test_process="notest"
             stackup="1:5nm_active,2:5nm_advanced_metal,2:5nm_intermediate_metal,2:5nm_global_metal"
             wafer_process="process_1"
-            nre_design_cost="0.0"
             v_rail="5,1.8"
             reg_eff="1.0,0.9"
             reg_type="none,side"
@@ -97,13 +207,25 @@
         </chip>
     </chip>
     <chip name="GPU"
-        coreArea="10.0"
+        bb_area=""
+        bb_cost=""
+        bb_quality=""
+        bb_power=""
+        aspect_ratio=""
+        x_location=""
+        y_location=""
+    
+        core_area="10.0"
+        fraction_memory="0.0"
+        fraction_logic="1.0"
+        fraction_analog="0.0"
+        gate_flop_ratio="1.0"
+        reticle_share="1.0"
         buried="False"
         assembly_process="organic_simultaneous_bonding"
-        test_process="test_process_0"
+        test_process="notest"
         stackup="1:5nm_active,2:5nm_advanced_metal,2:5nm_intermediate_metal,2:5nm_global_metal"
         wafer_process="process_1"
-        nre_design_cost="0.0"
         v_rail="5,1.8"
         reg_eff="1.0,0.9"
         reg_type="none,side"
