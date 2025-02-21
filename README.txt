@@ -32,6 +32,7 @@ Currently, I am running this using:
     Python 3.10.6
     Numpy 1.25.0
     xml.etree.ElementTree 1.3.0
+    matplotlib 3.10.0 (for plotting sweeps)
 
 
 ====================================
