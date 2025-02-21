@@ -98,8 +98,8 @@
         bandwidth="100"
         average_bandwidth_utilization="0.5">
     </net>
-    <!-- PCIe_standard is bidirectional. -->
-    <net type="PCIe"
+    <!-- UCIe_standard is bidirectional.  -->
+    <net type="UCIe_standard"
         block0="CPU"
         block1="GPU"
         bb_count=""
