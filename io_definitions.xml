@@ -14,16 +14,6 @@
     See the License for the specific language governing permissions and
     limitations under the License.
     =======================================================================
-    Filename: assembly_process_definitions.xml
-    Author: Alexander Graening
-    Affiliation: University of California, Los Angeles
-    Email: agraening@ucla.edu
-
-    Assembly Process Definition Format:
-        - Name: The name listed here is the name that should be referenced in the system definition.
-        - Materials Cost per mm2: This is given in units of $/mm^2. This is the
-            cost of the materials used in the assembly process.
-        - Pick and place machine cost in USD.
     Filename: io_definitions.xml
     Author: Alexander Graening
     Affiliation: University of California, Los Angeles
@@ -99,7 +89,6 @@
         energy_per_bit="0.000000000001"
         reach="10.0">
     </io> 
-    <!-- The following are modified definitions based on the above UCIe_standard but with arbitrarily set reach values. -->
     <io type="UCIe_standard_1"
         tx_area="0.75438"
         rx_area="0.75438"
@@ -171,10 +160,6 @@
     <!-- This is an IO cell based on a previous custom design in our lab. 
         We recommend defining IO cells using very descriptive names such as this. -->
     <!-- Taken from UCLA custom design. -->
-    <!-- The calculations for the size of ESD protection used here were based on 
-        a SPICE simulation, but did not comply to CDM as was the original intent. 
-        Avoid relying on the specific numbers below although these are a good example
-        for how to use the IO definitions. -->
     <io type="2Gbs_100vCDM_2mm"
         tx_area="0.0002"
         rx_area="0.0002"
@@ -351,16 +336,5 @@
         bidirectional="False"
         energy_per_bit="0.000000000001"
         reach="2.0">
-    </io>
-    <!-- Below was set for testing parameters. -->
-    <io type="temp_io"
-        tx_area="0.0"
-        rx_area="0.0"
-        shoreline="1.0"
-        bandwidth="1"
-        wire_count="1"
-        bidirectional="False"
-        energy_per_bit="0.0"
-        reach="10.0">
     </io>
 </ios>

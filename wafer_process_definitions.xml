@@ -14,16 +14,6 @@
     See the License for the specific language governing permissions and
     limitations under the License.
     =======================================================================
-    Filename: assembly_process_definitions.xml
-    Author: Alexander Graening
-    Affiliation: University of California, Los Angeles
-    Email: agraening@ucla.edu
-
-    Assembly Process Definition Format:
-        - Name: The name listed here is the name that should be referenced in the system definition.
-        - Materials Cost per mm2: This is given in units of $/mm^2. This is the
-            cost of the materials used in the assembly process.
-        - Pick and place machine cost in USD.
     Filename: wafer_process_definitions.xml
     Author: Alexander Graening
     Affiliation: University of California, Los Angeles
@@ -97,7 +87,7 @@
         nre_front_end_cost_per_mm2_memory="0.0"
         nre_back_end_cost_per_mm2_memory="0.0"
         nre_front_end_cost_per_mm2_logic="0.0"
-        nre_back_end_cost_per_mm2_logic="500000"
+        nre_back_end_cost_per_mm2_logic="100000"
         nre_front_end_cost_per_mm2_analog="0.0"
         nre_back_end_cost_per_mm2_analog="0.0">
     </wafer_process>

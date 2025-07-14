@@ -14,16 +14,6 @@
     See the License for the specific language governing permissions and
     limitations under the License.
     =======================================================================
-    Filename: assembly_process_definitions.xml
-    Author: Alexander Graening
-    Affiliation: University of California, Los Angeles
-    Email: agraening@ucla.edu
-
-    Assembly Process Definition Format:
-        - Name: The name listed here is the name that should be referenced in the system definition.
-        - Materials Cost per mm2: This is given in units of $/mm^2. This is the
-            cost of the materials used in the assembly process.
-        - Pick and place machine cost in USD.
     Filename: layer_definitions.xml
     Author: Alexander Graening
     Affiliation: University of California, Los Angeles
@@ -83,10 +73,10 @@
         transistor_density="0"
         litho_percent="0.0"
         nre_mask_cost="0"
-        stitching_yield="1.0">
+        stitching_yield="1.0"
+        routing_layer_count="4"
+        routing_layer_pitch="0.005">
     </layer>
-    <!-- The layerwise breakdown numbers shown here are just for demonstration. This style of 
-        layer definition can be used if you know layerwise cost. -->
     <!-- Numbers here are effectively made up. (need some numbers for layerwise breakdown)-->
     <layer name="5nm_active"
         active="True"
@@ -98,7 +88,9 @@
         transistor_density="117.3"
         litho_percent="0.2"
         nre_mask_cost="10000"
-        stitching_yield="0.9">
+        stitching_yield="0.9"
+        routing_layer_count="0"
+        routing_layer_pitch="0.0001">
     </layer>
     <!-- Numbers here are effectively made up. (need some numbers for layerwise breakdown)-->
     <layer name="5nm_advanced_metal"
@@ -110,7 +102,9 @@
         transistor_density="0"
         litho_percent="0.4"
         nre_mask_cost="5000"
-        stitching_yield="0.95">
+        stitching_yield="0.95"
+        routing_layer_count="1"
+        routing_layer_pitch="0.0001">
     </layer>
     <!-- Numbers here are effectively made up. (need some numbers for layerwise breakdown)-->
     <layer name="5nm_intermediate_metal"
@@ -122,7 +116,9 @@
         transistor_density="0"
         litho_percent="0.3"
         nre_mask_cost="1000"
-        stitching_yield="0.99">
+        stitching_yield="0.99"
+        routing_layer_count="1"
+        routing_layer_pitch="0.0005">
     </layer>
     <!-- Numbers here are effectively made up. (need some numbers for layerwise breakdown)-->
     <layer name="5nm_global_metal"
@@ -134,13 +130,15 @@
         transistor_density="0"
         litho_percent="0.2"
         nre_mask_cost="500"
-        stitching_yield="0.999">
+        stitching_yield="0.999"
+        routing_layer_count="1"
+        routing_layer_pitch="0.001">
     </layer>
     <!-- Below, these are one-layer approximations.
             A stackup should not contain multiple "combined_*" layers. -->
     <!-- Also, note that the cost per mm^2 is computed assuming a 300m^2 wafer with
             a 3mm edge exclusion and the same wafer cost used for the DAC paper.-->
-    <!-- The one-layer approximations are largely based on a couple 300mm wafer cost estimates from some semi-analysis articles. <add reference here> -->
+    <!-- The one-layer approximations are largely based on a couple 300mm wafer cost estimates from https://www.tomshardware.com/news/tsmcs-wafer-prices-revealed-300mm-wafer-at-5nm-is-nearly-dollar17000 -->
     <!-- The litho percent is also from a semi-analysis article. -->
     <!-- Mask cost, stitching yield, and critical area ratios are arbitrary. -->
     <!-- Clustering factor is set according to a yield modelling paper <add reference> and the defect densities are set arbitrarily to give reasonable yields (need a reference). -->
@@ -153,7 +151,9 @@
         transistor_density="0"
         litho_percent="0.15"
         nre_mask_cost="100000"
-        stitching_yield="0.5">
+        stitching_yield="0.5"
+        routing_layer_count="8"
+        routing_layer_pitch="0.0005">
     </layer>
     <layer name="combined_45nm"
         active="True"
@@ -164,11 +164,11 @@
         transistor_density="0"
         litho_percent="0.15"
         nre_mask_cost="100000"
-        stitching_yield="0.5">
+        stitching_yield="0.5"
+        routing_layer_count="8"
+        routing_layer_pitch="0.0005">
     </layer>
-    <!-- silicon interposer costs are from H. Li, G. Katti, L. Ding et al., “The cost study 
-        of 300mm through silicon interposer (tsi) with beol interconnect,” in 2013 IEEE 
-        15th Electronics Packaging Technology Conference (EPTC 2013). IEEE, 2013 -->
+    <!-- silicon interposer costs are from <add reference here> -->
     <layer name="combined_interposer_silicon"
         active="False"
         cost_per_mm2="0.021905"
@@ -178,21 +178,23 @@
         transistor_density="0"
         litho_percent="0.10"
         nre_mask_cost="5000"
-        stitching_yield="0.99">
+        stitching_yield="1.0"
+        routing_layer_count="4"
+        routing_layer_pitch="0.001">
     </layer>
-    <!-- The glass interposer costs are set same as silicon here with the expectation that
-        the differences matter more in size of the panel that can be processed which is 
-        larger than for silicon. This should use a different wafer_process than silicon. -->
+
     <layer name="combined_interposer_glass"
         active="False"
-        cost_per_mm2="0.0021905"
+        cost_per_mm2="0.043910"
         defect_density="0.00001"
         critical_area_ratio="0.3"
         clustering_factor="2"
         transistor_density="0"
         litho_percent="0.10"
         nre_mask_cost="5000"
-        stitching_yield="0.99">
+        stitching_yield="1.0"
+        routing_layer_count="4"
+        routing_layer_pitch="0.001">
     </layer>
     <!-- The organic interposer really does not have the concept of reticle and reticle stitching,
             so stitching yield is set to 1.0 and the cost per mm^2 is based on the $5 per square
@@ -206,9 +208,10 @@
         transistor_density="0"
         litho_percent="0.0"
         nre_mask_cost="500"
-        stitching_yield="1.0">
+        stitching_yield="1.0"
+        routing_layer_count="4"
+        routing_layer_pitch="0.005">
     </layer>
-    <!--This is copied from the 10nm for now.-->
     <layer name="combined_12nm"
         active="True"
         cost_per_mm2="0.05636207"
@@ -218,20 +221,24 @@
         transistor_density="0"
         litho_percent="0.25"
         nre_mask_cost="500000"
-        stitching_yield="0.5">
+        stitching_yield="0.5"
+        routing_layer_count="8"
+        routing_layer_pitch="0.0005">
     </layer>
     <!-- Cost per mm2 for hbm is from 4x the 12nm cost. Other parameters are unchanged from 12nm. (Probably inaccurate) -->
     <!-- Need an idea of how much cheaper DRAM is than logic. -->
     <layer name="combined_hbm2_12nm"
         active="True"
-        cost_per_mm2="0.22544828"
-        defect_density="0.02"
+        cost_per_mm2="0.1654538"
+        defect_density="0.005"
         critical_area_ratio="0.6"
         clustering_factor="2"
         transistor_density="0"
         litho_percent="0.25"
-        nre_mask_cost="2000000"
-        stitching_yield="0.5">
+        nre_mask_cost="500000"
+        stitching_yield="0.5"
+        routing_layer_count="8"
+        routing_layer_pitch="0.0005">
     </layer>
     <layer name="combined_10nm"
         active="True"
@@ -242,7 +249,9 @@
         transistor_density="0"
         litho_percent="0.25"
         nre_mask_cost="500000"
-        stitching_yield="0.5">
+        stitching_yield="0.5"
+        routing_layer_count="8"
+        routing_layer_pitch="0.0005">
     </layer>
     <layer name="combined_7nm"
         active="True"
@@ -253,20 +262,24 @@
         transistor_density="91.2"
         litho_percent="0.27"
         nre_mask_cost="1000000"
-        stitching_yield="0.5">
+        stitching_yield="0.5"
+        routing_layer_count="8"
+        routing_layer_pitch="0.0005">
     </layer>
     <!-- Cost per mm2 for hbm is from 8x the 7nm cost. Other parameters are unchanged from 7nm. (Probably inaccurate) -->
     <!-- Need an idea of how much cheaper DRAM is than logic. -->
     <layer name="combined_hbm_7nm"
         active="True"
-        cost_per_mm2="1.057752"
-        defect_density="0.04"
+        cost_per_mm2="1.10136"
+        defect_density="0.005"
         critical_area_ratio="0.6"
         clustering_factor="2"
         transistor_density="729.6"
         litho_percent="0.27"
         nre_mask_cost="1000000"
-        stitching_yield="0.5">
+        stitching_yield="0.5"
+        routing_layer_count="8"
+        routing_layer_pitch="0.0005">
     </layer>
     <layer name="combined_5nm"
         active="True"
@@ -277,7 +290,9 @@
         transistor_density="117.3"
         litho_percent="0.30"
         nre_mask_cost="3000000"
-        stitching_yield="0.5">
+        stitching_yield="0.5"
+        routing_layer_count="8"
+        routing_layer_pitch="0.0005">
     </layer>
     <layer name="combined_3nm"
         active="True"
@@ -288,9 +303,10 @@
         transistor_density="0"
         litho_percent="0.35"
         nre_mask_cost="5000000"
-        stitching_yield="0.5">
+        stitching_yield="0.5"
+        routing_layer_count="8"
+        routing_layer_pitch="0.0005">
     </layer>
-    <!-- The following modify the defect density to allow for running sweeps. -->
     <layer name="combined_3nm_0.001"
         active="True"
         cost_per_mm2="0.29461"
@@ -300,7 +316,9 @@
         transistor_density="0"
         litho_percent="0.35"
         nre_mask_cost="5000000"
-        stitching_yield="0.5">
+        stitching_yield="0.5"
+        routing_layer_count="8"
+        routing_layer_pitch="0.0005">
     </layer>
     <layer name="combined_3nm_0.005"
         active="True"
@@ -311,7 +329,9 @@
         transistor_density="0"
         litho_percent="0.35"
         nre_mask_cost="5000000"
-        stitching_yield="0.5">
+        stitching_yield="0.5"
+        routing_layer_count="8"
+        routing_layer_pitch="0.0005">
     </layer>
     <layer name="combined_3nm_0.01"
         active="True"
@@ -322,6 +342,8 @@
         transistor_density="0"
         litho_percent="0.35"
         nre_mask_cost="5000000"
-        stitching_yield="0.5">
+        stitching_yield="0.5"
+        routing_layer_count="8"
+        routing_layer_pitch="0.0005">
     </layer>
 </layers>

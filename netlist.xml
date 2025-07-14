@@ -14,16 +14,6 @@
     See the License for the specific language governing permissions and
     limitations under the License.
     =======================================================================
-    Filename: assembly_process_definitions.xml
-    Author: Alexander Graening
-    Affiliation: University of California, Los Angeles
-    Email: agraening@ucla.edu
-
-    Assembly Process Definition Format:
-        - Name: The name listed here is the name that should be referenced in the system definition.
-        - Materials Cost per mm2: This is given in units of $/mm^2. This is the
-            cost of the materials used in the assembly process.
-        - Pick and place machine cost in USD.
     Filename: netlist.xml
     Author: Alexander Graening
     Affiliation: University of California, Los Angeles
@@ -98,8 +88,8 @@
         bandwidth="100"
         average_bandwidth_utilization="0.5">
     </net>
-    <!-- UCIe_standard is bidirectional.  -->
-    <net type="UCIe_standard"
+    <!-- PCIe_standard is bidirectional. -->
+    <net type="PCIe"
         block0="CPU"
         block1="GPU"
         bb_count=""

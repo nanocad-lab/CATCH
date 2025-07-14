@@ -28,7 +28,8 @@ INPUT_WAFER_FILE="wafer_process_definitions.xml"
 INPUT_ASSEMBLY_FILE="assembly_process_definitions.xml"
 INPUT_TEST_FILE="test_definitions.xml"
 
-SWEEP="0.5 0.9 0.95 1.0"
+SWEEP="0.84 0.92 0.96 0.98 0.99"
+#SWEEP="0.5 0.9 0.95 1.0"
 
 # echo "Creating a temporary file temp_${INPUT_FILE}"
 echo "x-axis label: Fault Coverage"

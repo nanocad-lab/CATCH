@@ -14,7 +14,8 @@
     See the License for the specific language governing permissions and
     limitations under the License.
     =======================================================================
-    -->
+-->
+
 <chip name="interposer"
 	bb_area=""
 	bb_cost=""
@@ -23,6 +24,8 @@
 	aspect_ratio=""
 	x_location=""
 	y_location=""
+    orientation="face-up"
+    stack_side="face"
 	core_area="0.0"
 	fraction_memory="0.0"
 	fraction_logic="0.0"
@@ -45,6 +48,8 @@
 		aspect_ratio=""
 		x_location=""
 		y_location=""
+        orientation="face-down"
+        stack_side="face"
 		core_area="200.0"
 		fraction_memory="0.0"
 		fraction_logic="1.0"
@@ -68,6 +73,8 @@
 		aspect_ratio=""
 		x_location=""
 		y_location=""
+        orientation="face-down"
+        stack_side="face"
 		core_area="200.0"
 		fraction_memory="0.0"
 		fraction_logic="1.0"
@@ -91,6 +98,8 @@
 		aspect_ratio=""
 		x_location=""
 		y_location=""
+        orientation="face-down"
+        stack_side="face"
 		core_area="200.0"
 		fraction_memory="0.0"
 		fraction_logic="1.0"
@@ -114,6 +123,8 @@
 		aspect_ratio=""
 		x_location=""
 		y_location=""
+        orientation="face-down"
+        stack_side="face"
 		core_area="200.0"
 		fraction_memory="0.0"
 		fraction_logic="1.0"

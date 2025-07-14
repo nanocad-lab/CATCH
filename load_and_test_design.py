@@ -61,7 +61,7 @@ def main():
     sip = d.Chip(filename = chip_file, etree = None, parent_chip = None, wafer_process_list = wafer_process_list, assembly_process_list = assembly_process_list, test_process_list = test_process_list, layers = layer_list, ios = io_list, adjacency_matrix_definitions = adjacency_matrix, average_bandwidth_utilization=utilization, block_names = names, static = False)
 
     # Print the Design Description
-    # sip.print_description()
+    #sip.print_description()
 
     #print("Cost of design = " + str(sip.get_cost()))
     print(sip.compute_total_cost())

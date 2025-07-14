@@ -117,7 +117,7 @@ def layer_definition_list_from_file(filename):
     for layer_def in root:
         # Create a layer object.
         layer = d.Layer(name = "", active = "False", cost_per_mm2 = 0, transistor_density = 0, defect_density = 0, critical_area_ratio = 0,
-                        clustering_factor = 0, litho_percent = 0, mask_cost = 0, stitching_yield = 0, static = False)
+                        clustering_factor = 0, litho_percent = 0, mask_cost = 0, stitching_yield = 0, routing_layer_count = 0, routing_layer_pitch = 0.0, static = False)
         attributes = layer_def.attrib
         # Set the layer object attributes.
         layer.name = attributes["name"]
@@ -130,6 +130,8 @@ def layer_definition_list_from_file(filename):
         layer.litho_percent = float(attributes["litho_percent"])
         layer.mask_cost = float(attributes["nre_mask_cost"])
         layer.stitching_yield = float(attributes["stitching_yield"])
+        layer.routing_layer_count = int(attributes.get("routing_layer_count", 0))
+        layer.routing_layer_pitch = float(attributes.get("routing_layer_pitch", 0.0))
 
         layer.set_static()
         # Append the layer object to the list.
@@ -151,10 +153,11 @@ def assembly_process_definition_list_from_file(filename):
         # Create an assembly process object.
         assembly_process = d.Assembly(name = "", materials_cost_per_mm2 = 0.0, bb_cost_per_second = None, picknplace_machine_cost = 0.0,
                                       picknplace_machine_lifetime = 1.0, picknplace_machine_uptime = 0.0, picknplace_technician_yearly_cost = 0.0,
-                                      picknplace_time = 0.0, picknplace_group = 0, bonding_machine_cost = 0.0, bonding_machine_lifetime = 1.0,
+                                      picknplace_time = 0.0, picknplace_group = 1, bonding_machine_cost = 0.0, bonding_machine_lifetime = 1.0,
                                       bonding_machine_uptime = 0.0, bonding_technician_yearly_cost = 0.0, bonding_time = 0.0,
-                                      bonding_group = 0, die_separation = 0.0, edge_exclusion = 0.0, bonding_pitch = 0.0, max_pad_current_density = 0.0,
-                                      alignment_yield = 0.0, bonding_yield = 0.0, dielectric_bond_defect_density = 0.0, static = False)
+                                      bonding_group = 1, die_separation = 0.0, edge_exclusion = 0.0, bonding_pitch = 0.0, 
+                                      max_pad_current_density = 0.0, alignment_yield = 0.0, bonding_yield = 0.0, dielectric_bond_defect_density = 0.0, 
+                                      tsv_area = 0.0, tsv_yield = 1.0, tsv_pitch = 0.0, static = False)
         
         attributes = assembly_process_def.attrib
 
@@ -192,6 +195,9 @@ def assembly_process_definition_list_from_file(filename):
         assembly_process.alignment_yield = float(attributes["alignment_yield"])
         assembly_process.bonding_yield = float(attributes["bonding_yield"])
         assembly_process.dielectric_bond_defect_density = float(attributes["dielectric_bond_defect_density"])
+        assembly_process.tsv_area = float(attributes["tsv_area"])
+        assembly_process.tsv_yield = float(attributes["tsv_yield"])
+        assembly_process.tsv_pitch = float(attributes["tsv_pitch"])
 
         assembly_process.set_static()
 
@@ -374,6 +380,10 @@ def global_adjacency_matrix_from_file(filename, io_list):
             else:
                 average_bandwidth_utilization[link_type][block2_index,block1_index] = (average_bandwidth_utilization[link_type][block2_index,block1_index]*global_adjacency_matrix[link_type][block2_index,block1_index] + link_average_bandwidth_utilization*ios_to_add)/(global_adjacency_matrix[link_type][block2_index,block1_index] + ios_to_add)
             global_adjacency_matrix[link_type][block2_index,block1_index] += ios_to_add
+
+    #np.set_printoptions(threshold=np.inf)
+    #print(global_adjacency_matrix['2Gbs_100vCDM_2mm'])
+    #print(average_bandwidth_utilization['2Gbs_100vCDM_2mm'])
 
     return global_adjacency_matrix, average_bandwidth_utilization, block_names
 

@@ -1,0 +1,136 @@
+<!--
+    =======================================================================
+    Copyright 2025 UCLA NanoCAD Laboratory
+    
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+    
+        http://www.apache.org/licenses/LICENSE-2.0
+    
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+    =======================================================================
+    Filename: heterogeneous_testcase_netlist.xml
+    Author: Alexander Graening
+    Affiliation: University of California, Los Angeles
+    Email: agraening@ucla.edu
+-->
+
+<netlist>
+	<net type="2Gbs_100vCDM_2mm"
+		block0="Compute_0"
+		block1="Memory_0"
+		bb_count=""
+		bandwidth="4194.053079344207"
+		average_bandwidth_utilization="0.5">
+	</net>
+	<net type="2Gbs_100vCDM_2mm"
+		block0="Memory_0"
+		block1="Compute_0"
+		bb_count=""
+		bandwidth="2033.4802808941608"
+		average_bandwidth_utilization="0.5">
+	</net>
+	<net type="2Gbs_100vCDM_2mm"
+		block0="Compute_1"
+		block1="Memory_1"
+		bb_count=""
+		bandwidth="4194.053079344207"
+		average_bandwidth_utilization="0.5">
+	</net>
+	<net type="2Gbs_100vCDM_2mm"
+		block0="Memory_1"
+		block1="Compute_1"
+		bb_count=""
+		bandwidth="2033.4802808941608"
+		average_bandwidth_utilization="0.5">
+	</net>
+	<net type="2Gbs_100vCDM_2mm"
+		block0="Compute_2"
+		block1="Memory_2"
+		bb_count=""
+		bandwidth="4194.053079344207"
+		average_bandwidth_utilization="0.5">
+	</net>
+	<net type="2Gbs_100vCDM_2mm"
+		block0="Memory_2"
+		block1="Compute_2"
+		bb_count=""
+		bandwidth="2033.4802808941608"
+		average_bandwidth_utilization="0.5">
+	</net>
+	<net type="2Gbs_100vCDM_2mm"
+		block0="Compute_3"
+		block1="Memory_3"
+		bb_count=""
+		bandwidth="4194.053079344207"
+		average_bandwidth_utilization="0.5">
+	</net>
+	<net type="2Gbs_100vCDM_2mm"
+		block0="Memory_3"
+		block1="Compute_3"
+		bb_count=""
+		bandwidth="2033.4802808941608"
+		average_bandwidth_utilization="0.5">
+	</net>
+	<net type="2Gbs_100vCDM_2mm"
+		block0="Compute_0"
+		block1="Compute_1"
+		bb_count=""
+		bandwidth="1604.5430341430488"
+		average_bandwidth_utilization="0.5">
+	</net>
+	<net type="2Gbs_100vCDM_2mm"
+		block0="Compute_1"
+		block1="Compute_0"
+		bb_count=""
+		bandwidth="1604.5430341430488"
+		average_bandwidth_utilization="0.5">
+	</net>
+	<net type="2Gbs_100vCDM_2mm"
+		block0="Compute_2"
+		block1="Compute_0"
+		bb_count=""
+		bandwidth="1604.5430341430488"
+		average_bandwidth_utilization="0.5">
+	</net>
+	<net type="2Gbs_100vCDM_2mm"
+		block0="Compute_0"
+		block1="Compute_2"
+		bb_count=""
+		bandwidth="1604.5430341430488"
+		average_bandwidth_utilization="0.5">
+	</net>
+	<net type="2Gbs_100vCDM_2mm"
+		block0="Compute_3"
+		block1="Compute_1"
+		bb_count=""
+		bandwidth="1604.5430341430488"
+		average_bandwidth_utilization="0.5">
+	</net>
+	<net type="2Gbs_100vCDM_2mm"
+		block0="Compute_1"
+		block1="Compute_3"
+		bb_count=""
+		bandwidth="1604.5430341430488"
+		average_bandwidth_utilization="0.5">
+	</net>
+	<net type="2Gbs_100vCDM_2mm"
+		block0="Compute_3"
+		block1="Compute_2"
+		bb_count=""
+		bandwidth="1604.5430341430488"
+		average_bandwidth_utilization="0.5">
+	</net>
+	<net type="2Gbs_100vCDM_2mm"
+		block0="Compute_2"
+		block1="Compute_3"
+		bb_count=""
+		bandwidth="1604.5430341430488"
+		average_bandwidth_utilization="0.5">
+	</net>
+</netlist>

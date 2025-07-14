@@ -67,52 +67,90 @@ def read_data(filename):
     return x_axis_label, y_axis_label, x_labels, y_values, series_labels, stack
 
 def plot_data(x_axis_label, y_axis_label, x_labels, y_values, series_labels, stack, rotation, plot_type, output_filename, x_justification='right'):
-    plt.figure(figsize=(10, 6))
-
+    # Set up figure size for line plots and dynamically for bar plots
+    default_fig_width = 10
+    default_fig_height = 6
     bar_width = 0.5
+    n_bars = len(x_labels)
+    # For bar plots, scale figure width so that bar width and spacing are constant, and 6 bars matches default_fig_width
+    if plot_type == 'bar' or stack:
+        # Assume spacing between bars = bar_width (for visual clarity)
+        spacing = bar_width
+        # For 6 bars: width = 6*bar_width + 5*spacing = 6*0.5 + 5*0.5 = 5.5
+        # So scale up to default_fig_width
+        scale = default_fig_width / (6 * bar_width + 5 * spacing)
+        fig_width = scale * (n_bars * bar_width + (n_bars - 1) * spacing)
+        plt.figure(figsize=(fig_width, default_fig_height))
+    else:
+        plt.figure(figsize=(default_fig_width, default_fig_height))
+    plt.rcParams['font.family'] = 'DejaVu Sans'
+    plt.style.use('seaborn-v0_8-colorblind')
 
+    hatches = ['/', '\\', '|', '-', '+', 'x', 'o', 'O', '.', '*']
     if stack:
         for i in range(len(y_values)):
             sum_y_values = []
             for j in range(len(y_values[i])):
                 sum_y_values.append(sum([y_values[k][j] for k in range(i)]))
-            plt.bar(x_labels, y_values[i], label=series_labels[i], bottom=sum_y_values, width=bar_width)
+            hatch = hatches[i % len(hatches)]
+            plt.bar(x_labels, y_values[i], label=series_labels[i], bottom=sum_y_values, width=bar_width, hatch=hatch, edgecolor='black')
         plt.legend()
     else:
         if plot_type == 'line':
+            # Use a set of distinct markers for each line for B&W clarity
+            marker_list = ['o', 's', 'D', '^', 'v', 'P', 'X', '*', 'h', '+', 'x', '|', '_', '1', '2', '3', '4']
             if len(series_labels) > 1:
                 for i in range(len(y_values)):
-                    plt.plot(x_labels, y_values[i], marker='o', label=series_labels[i])
+                    marker = marker_list[i % len(marker_list)]
+                    plt.plot(x_labels, y_values[i], marker=marker, label=series_labels[i])
                 plt.legend()
             else:
                 plt.plot(x_labels, y_values[0], marker='o')
         elif plot_type == 'bar':
             if len(series_labels) > 1:
                 for i in range(len(y_values)):
-                    plt.bar(x_labels, y_values[i], label=series_labels[i], width=bar_width)
+                    hatch = hatches[i % len(hatches)]
+                    plt.bar(x_labels, y_values[i], label=series_labels[i], width=bar_width, hatch=hatch, edgecolor='black')
                 plt.legend()
             else:
-                plt.bar(x_labels, y_values[0], width=bar_width)
+                plt.bar(x_labels, y_values[0], width=bar_width, edgecolor='black')
         else:
             print("Invalid plot type. Use 'line' or 'bar'.")
             return
 
-    fontsize=22
+    fontsize=20
 
-    plt.xlabel(x_axis_label, fontsize=fontsize)
-    plt.ylabel(y_axis_label, fontsize=fontsize)
+    # Set axis label sizes and add extra padding to prevent overlap with tick labels
+    # If legend is below, add more labelpad to axis labels to avoid overlap with legend
+    extra_labelpad = 14
+    #if len(series_labels) > 1:
+    #    extra_labelpad = 28
+    plt.xlabel(x_axis_label, fontsize=fontsize+10, labelpad=extra_labelpad)
+    plt.ylabel(y_axis_label, fontsize=fontsize+10, labelpad=extra_labelpad)
     # plt.title(f'{x_axis_label} vs {y_axis_label}', fontsize=fontsize)
     if len(series_labels) > 1:
         # Count up the total number of characters in the series labels
         total_chars = sum([len(label) for label in series_labels])
         n_cols = math.ceil(len(series_labels)/math.ceil(total_chars/20))
-        plt.legend(loc='upper center', bbox_to_anchor=(0.5, -0.2), fontsize=fontsize-10, ncol=n_cols)
+        plt.legend(loc='upper center', bbox_to_anchor=(0.5, -0.3), fontsize=fontsize+2, ncol=n_cols)
     plt.grid(True)
-    plt.xticks(rotation=rotation, ha=x_justification, fontsize=fontsize)
+    # For bar charts, if any x label is longer than 5 chars, angle by 10 degrees to avoid overlap
+    xtick_rotation = rotation
+    xtick_ha = x_justification
+    if (plot_type == 'bar' or stack) and any(len(str(lbl)) > 5 for lbl in x_labels):
+        xtick_rotation = 15
+        xtick_ha = 'right'
+    plt.xticks(rotation=xtick_rotation, ha=xtick_ha, fontsize=fontsize)
     plt.yticks(fontsize=fontsize)
-    plt.tight_layout()
+    # Use tight_layout with extra padding to avoid overlap of large axis labels and tick labels
+    # If legend is below, add more bottom margin and more padding
+    if len(series_labels) > 1:
+        plt.tight_layout(pad=3.5)
+        plt.subplots_adjust(bottom=0.36)
+    else:
+        plt.tight_layout(pad=2.5)
     # Output to file
-    plt.savefig(output_filename)
+    plt.savefig(output_filename, dpi=300, bbox_inches='tight')
     # Display the plot
     # plt.show()
 
