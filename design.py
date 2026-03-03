@@ -3750,7 +3750,7 @@ class Chip:
                 # print("Adjacency matrix:" + str(self.global_adjacency_matrix[io_type][:][:]))
                 if j not in internal_block_list_indices:
                     # print("Adding to signal count for " + self.block_names[j] + ".")
-                    # print("io signal width = " + str(io.get_wire_count()) + ".")
+                    # print("io signal width = " + str(io.wire_count) + ".")
                     # print("Signal count before = " + str(signal_count) + ".")
                     signal_count += (self.global_adjacency_matrix[io_type][block_index][j] + self.global_adjacency_matrix[io_type][j][block_index]) * io.wire_count * bidirectional_factor
                     # print("Signal count after = " + str(signal_count) + ".")
@@ -3834,10 +3834,11 @@ class Chip:
     def get_chips_signal_count(self) -> int:
         # Counts the total number of signals for all chips in the stack.
         signal_count = 0
-        internal_chip_list = self.get_chip_list()
         for chip in self.face_chips:
+            internal_chip_list = chip.get_chip_list()
             signal_count += chip.get_signal_count(internal_chip_list)[0]
         for chip in self.back_chips:
+            internal_chip_list = chip.get_chip_list()
             signal_count += chip.get_signal_count(internal_chip_list)[0]
         # for chip in self.chips:
         #     signal_count += chip.get_signal_count(internal_chip_list)[0]
